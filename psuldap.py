@@ -13,7 +13,7 @@ class psuldap:
             self.conn.simple_bind_s()
 
         else:
-            self.conn.start_tls_s()
+#            self.conn.start_tls_s()
             self.conn.simple_bind_s(userdn, password)
 
     
@@ -41,7 +41,7 @@ class psuldap:
         )
 
 
-    def search(self, searchbase="dc=pdx,dc=edu", searchfilter=None, attrlist=None):
+    def search(self, searchbase="o=orst.edu", searchfilter=None, attrlist=None):
         """Conducts a subtree search from <searchbase>, using <searchfilter>. If <attrlist> is None, then all attributes are returned. Returns a list of 2-tuples, the first element being the dn of the record, the second element being a dictionary where the keys are attribute names and items are a list of values."""
         return self.conn.search_s(
             searchbase
