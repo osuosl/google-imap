@@ -34,9 +34,6 @@ class imapstat:
 
 
     def parsequota(self, rawdata):
-
-        print "parsequota rawdata: "
-        print rawdata
         """Takes the raw output from a IMAP getquotaroot command, like so:
         [['INBOX INBOX'], ['INBOX (STORAGE 151788 1000000)']]
 
