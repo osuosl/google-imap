@@ -65,15 +65,15 @@ class imapstat:
 
         quota_parse = quota_form.parseString
 
-        quota, quota_used = (0, 0)
+        quota, quota_used = (563200, 0)
+        if rawdata[1][0]:
+            try:
+                parsed = quota_parse(rawdata[1][0])
+                quota_used = int(parsed[3])
+                quota = int(parsed[4])
 
-        try:
-            parsed = quota_parse(rawdata[1][0])
-            quota_used = int(parsed[3])
-            quota = int(parsed[4])
-
-        except:
-            raise Exception("Error parsing: %s" % rawdata[1])
+            except:
+                raise Exception("Error parsing: %s" % rawdata[1])
 
         return (quota_used, quota)
 
