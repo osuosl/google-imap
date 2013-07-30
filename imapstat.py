@@ -34,6 +34,9 @@ class imapstat:
 
 
     def parsequota(self, rawdata):
+
+        print "parsequota rawdata: "
+        print rawdata
         """Takes the raw output from a IMAP getquotaroot command, like so:
         [['INBOX INBOX'], ['INBOX (STORAGE 151788 1000000)']]
 
@@ -105,7 +108,7 @@ class imapstat:
         Exception: Error parsing ('(\\\\HasNoChildren) "/" {34}', 'Other Users/hyndlatest/foo "quote"')
         """
         flags = Word(alphas + '\\')
-        root = Word(alphas + '/')
+        root = Word(alphas + '/' + '.', alphas + '.' + '/')
         mboxname = Word(printables + ' ')
 
         mbox_form = '(' + ZeroOrMore(flags) + ')' + '"' + root  + '"' + mboxname
@@ -115,11 +118,11 @@ class imapstat:
         parsed = set()
 
         for raw_mbox in rawdata:
-            try:
-                parsed.add(mbox_parse(raw_mbox).pop())
-
-            except:
-                raise Exception("Error parsing %s" % str(raw_mbox))
+            if raw_mbox:
+                try:
+                    parsed.add(mbox_parse(raw_mbox).pop())
+                except:
+                    raise Exception("Error parsing %s" % str(raw_mbox))
 
         return list(parsed)
 
